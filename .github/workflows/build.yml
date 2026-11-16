@@ -42,8 +42,11 @@ jobs:
           distribution: temurin
           java-version: ${{ env.JAVA_VERSION }}
 
+      # v4 removes the obsolete SDK "tools" package that caused the previous failure.
       - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
+        uses: android-actions/setup-android@v4
+        with:
+          packages: 'platform-tools platforms;android-35 build-tools;35.0.0'
 
       - name: Install dependencies
         working-directory: extracted/minichat-android
@@ -72,4 +75,3 @@ jobs:
           path: extracted/minichat-android/android/app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
           retention-days: 30
- 
